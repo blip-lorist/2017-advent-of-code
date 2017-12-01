@@ -18,11 +18,11 @@ func main() {
   scanner := bufio.NewScanner(file)
   for scanner.Scan() {
     str := scanner.Text()
-    fmt.Println(captcha(str))
+    fmt.Println(captchaHalf(str))
   }
 }
 
-func captcha(input string) int {
+func captchaNeighbor(input string) int {
   slice := strings.Split(input, "")
   length := len(slice)
   sum := 0
@@ -46,4 +46,28 @@ func captcha(input string) int {
   return sum
 }
 
+func captchaHalf(input string) int {
+  slice := strings.Split(input, "")
+  length := len(slice)
+  halfDistance := length/2
+  sum := 0
 
+  for i, num := range slice {
+    current, _ := strconv.Atoi(num)
+
+    var next int
+
+    nextI := i + halfDistance
+    if nextI > (length - 1) {
+      next, _ = strconv.Atoi(slice[nextI-length])
+    } else {
+      next, _ = strconv.Atoi(slice[nextI])
+    }
+
+    if current == next {
+      sum += current
+    }
+  }
+
+  return sum
+}
