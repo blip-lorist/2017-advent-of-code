@@ -1,6 +1,6 @@
 package captcha
 
-func CaptchaFunc() int {
+func CaptchaFunc(input int) int {
   var sum int = 0
   return sum
 }

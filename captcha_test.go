@@ -13,10 +13,10 @@ var tests = map[int]int{
 }
 
 func TestCaptchaFunc(t *testing.T) {
-  actual := CaptchaFunc()
-  for i, expected := range tests {
+  for input, expected := range tests {
+    actual := CaptchaFunc(input)
     if expected != actual {
-      t.Errorf("at index %d, expected %d, got %d", i, expected, actual)
+      t.Errorf("for input %d, expected %d, got %d", input, expected, actual)
     }
   }
 }
