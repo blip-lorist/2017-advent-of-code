@@ -3,18 +3,23 @@ package main
 import (
   "strings"
   "strconv"
-  "io/ioutil"
+  "bufio"
   "fmt"
+  "os"
 )
 
 func main() {
-  file, err := ioutil.ReadFile("input.txt")
-	if err != nil {
-		fmt.Print(err)
+  file, err := os.Open("input.txt")
+  if err != nil {
+    fmt.Println(err)
   }
+  defer file.Close()
 
-	str := string(file)
-	fmt.Println(captcha(str))
+  scanner := bufio.NewScanner(file)
+  for scanner.Scan() {
+    str := scanner.Text()
+    fmt.Println(captcha(str))
+  }
 }
 
 func captcha(input string) int {
