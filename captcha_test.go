@@ -12,9 +12,9 @@ var tests = map[string]int{
   "91212129" : 9,
 }
 
-func TestCaptchaFunc(t *testing.T) {
+func TestCaptcha(t *testing.T) {
   for input, expected := range tests {
-    actual := CaptchaFunc(input)
+    actual := captcha(input)
     if expected != actual {
       t.Errorf("for input %s, expected %d, got %d", input, expected, actual)
     }
