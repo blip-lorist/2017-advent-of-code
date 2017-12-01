@@ -1,7 +1,7 @@
 package captcha
 
 import "testing"
-// Learning how to test with: https://www.binpress.com/tutorial/getting-started-with-go-and-test-driven-development/160
+// Learning how to test with: https://blog.alexellis.io/golang-writing-unit-tests/
 
 // Here's my test input and expected output
 // This builds a literal hash map in Go
@@ -13,10 +13,10 @@ var tests = map[int]int{
 }
 
 func TestCaptchaFunc(t *testing.T) {
-  fn := CaptchaFunc()
-  for i, v := range tests {
-    if val := fn(); val != v {
-      t.Fatalf("at index %d, expected %d, got %d", i, v, val)
+  actual := CaptchaFunc()
+  for i, expected := range tests {
+    if expected != actual {
+      t.Fatalf("at index %d, expected %d, got %d", i, expected, actual)
     }
   }
 }
