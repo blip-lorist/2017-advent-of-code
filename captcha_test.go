@@ -1,4 +1,4 @@
-package captcha
+package main
 
 import "testing"
 // Learning how to test with: https://blog.alexellis.io/golang-writing-unit-tests/

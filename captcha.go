@@ -1,9 +1,21 @@
-package captcha
+package main
 
 import (
   "strings"
   "strconv"
+  "io/ioutil"
+  "fmt"
 )
+
+func main() {
+  file, err := ioutil.ReadFile("input.txt")
+	if err != nil {
+		fmt.Print(err)
+  }
+
+	str := string(file)
+	fmt.Println(captcha(str))
+}
 
 func captcha(input string) int {
   slice := strings.Split(input, "")
