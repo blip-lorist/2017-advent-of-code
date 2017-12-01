@@ -16,7 +16,7 @@ func TestCaptchaFunc(t *testing.T) {
   actual := CaptchaFunc()
   for i, expected := range tests {
     if expected != actual {
-      t.Fatalf("at index %d, expected %d, got %d", i, expected, actual)
+      t.Errorf("at index %d, expected %d, got %d", i, expected, actual)
     }
   }
 }
