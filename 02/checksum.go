@@ -21,7 +21,7 @@ func main() {
 
   for scanner.Scan() {
     line := scanner.Text()
-    diff := difference(line)
+    diff := evenDivision(line)
     sum += diff
   }
   fmt.Println(sum)
