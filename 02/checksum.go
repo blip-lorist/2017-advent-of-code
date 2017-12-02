@@ -6,6 +6,7 @@ import (
   "bufio"
   "fmt"
   "os"
+  "sort"
 )
 
 func main() {
@@ -49,4 +50,41 @@ func difference(input string) int {
 
   diff := largest - smallest
   return diff
+}
+
+func evenDivision(input string) int {
+  // There are a few ways to solve this, I think
+  // Prime factor comparisons
+  // Even vs odd
+  // On*n division
+
+  slice := strings.Fields(input)
+  var intSlice[]int
+
+  // Convert all strings to ints
+  for _, num := range slice {
+    num, _ := strconv.Atoi(num)
+    intSlice = append(intSlice, num)
+  }
+
+  // Sort from smallest to largest
+  sort.Ints(intSlice)
+
+  for i, num := range intSlice {
+    for j, largerNum := range intSlice {
+      if i == j {
+        // don't divide a number by itself
+        continue
+      }
+
+      // Divide each num into all other numbers
+      if largerNum % num == 0 {
+        quotient := largerNum / num
+        return quotient
+      }
+    }
+  }
+
+  err := -1
+  return err
 }
