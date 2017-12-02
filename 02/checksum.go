@@ -15,15 +15,19 @@ func main() {
   }
   defer file.Close()
 
+  sum := 0
   scanner := bufio.NewScanner(file)
+
   for scanner.Scan() {
-    str := scanner.Text()
-    fmt.Println(difference(str))
+    line := scanner.Text()
+    diff := difference(line)
+    sum += diff
   }
+  fmt.Println(sum)
 }
 
 func difference(input string) int {
-  slice := strings.Split(input, " ")
+  slice := strings.Fields(input)
   firstValue := slice[0]
 
   // Largest and smallest values are initially 
