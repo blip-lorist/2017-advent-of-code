@@ -28,18 +28,32 @@ module SpiralMemory
     def place_square(value)
       if self.last_move_direction == nil
         # This is the first new square, go right
-        new_coordinates = get_new_coordinates(MOVE_RIGHT)
+        move_direction = MOVE_RIGHT
+        new_coordinates = get_new_coordinates(move_direction)
       end
 
       # Add the new square to our grid
       self.squares[coordinate_string(new_coordinates)] = Square.new(value, new_coordinates[0], new_coordinates[1])
+
+      self.last_coordinate_added = coordinate_string(new_coordinates)
+      self.last_move_direction = move_direction
     end
 
     def get_new_coordinates(direction)
-      last_square = self.squares[self.last_coordinate_added]
-      new_row = last_square.row + direction[0]
-      new_col = last_square.col + direction[1]
+      new_row = self.last_square.row + direction[0]
+      new_col = self.last_square.col + direction[1]
       [new_row, new_col]
+    end
+
+    def get_distance(value)
+      add_squares(value) unless value == 1
+      col = self.last_square.col
+      row = self.last_square.row
+      col.abs + row.abs
+    end
+
+    def last_square
+      self.squares[self.last_coordinate_added]
     end
   end
 
