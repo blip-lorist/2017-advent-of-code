@@ -38,8 +38,11 @@ module SpiralMemory
       end
 
       # Add the new square to our grid
-      self.squares[coordinate_string(new_coordinates)] = Square.new(value, new_coordinates[0], new_coordinates[1])
+      new_square = Square.new(value, new_coordinates[0], new_coordinates[1])
+      adjacent_summed_value = sum_adjacent_values(new_square)
+      new_square.value = adjacent_summed_value
 
+      self.squares[coordinate_string(new_coordinates)] = new_square
       self.last_coordinate_added = coordinate_string(new_coordinates)
       self.last_move_direction = move_direction
     end
@@ -102,10 +105,21 @@ module SpiralMemory
       end
       adjacent_values
     end
+
+    def sum_adjacent_values(square)
+      adjacent_values = find_adjacent_values(square)
+      sum = 0
+      adjacent_values.each do |value|
+        sum += value
+      end
+
+      sum
+    end
   end
 
   class Square
-    attr_reader :value, :row, :col
+    attr_reader :row, :col
+    attr_accessor :value
     def initialize(value, col, row)
       @value = value
       @row = row

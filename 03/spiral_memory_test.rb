@@ -21,7 +21,7 @@ describe SpiralMemory::Grid do
 
     it "places the next square" do
      assert_equal(1, @grid.get_distance(2))
-     assert_equal(@grid.last_square.value, 2)
+     assert_equal(@grid.last_square.value, 1) # part two adjacent square value
      assert_equal(@grid.last_square.row, 0)
      assert_equal(@grid.last_square.col, 1)
     end
@@ -45,7 +45,15 @@ describe SpiralMemory::Grid do
     it "finds all adjacent values" do
       @grid.add_squares(3) # this is placed at 1-1
       third_square = @grid.squares["1-1"]
-      assert_equal([1, 2], @grid.find_adjacent_values(third_square))
+      assert_equal([1, 1], @grid.find_adjacent_values(third_square))
+    end
+  end
+
+  describe "#square values attribute" do
+    it "is set to the sum of adjacent square values" do
+      @grid.add_squares(3) # this is placed at 1-1
+      third_square = @grid.squares["1-1"]
+      assert_equal(2, third_square.value)
     end
   end
 end
