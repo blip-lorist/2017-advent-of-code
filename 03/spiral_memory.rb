@@ -30,6 +30,16 @@ module SpiralMemory
         # This is the first new square, go right
         move_direction = MOVE_RIGHT
         new_coordinates = get_new_coordinates(move_direction)
+      else
+        # Try next direction
+        move_direction = get_next_direction
+        new_coordinates = get_new_coordinates(move_direction)
+
+        if square_taken?(new_coordinates)
+          # Go in previous direction
+          move_direction = last_move_direction
+          new_coordinates = get_new_coordinates(move_direction)
+        end
       end
 
       # Add the new square to our grid
@@ -39,9 +49,25 @@ module SpiralMemory
       self.last_move_direction = move_direction
     end
 
+    def square_taken?(coordinates)
+      self.squares[coordinate_string(coordinates)].is_a?(Square)
+    end
+
+    def get_next_direction
+      last_move_direction_index = DIRECTION_SEQUENCE.index(self.last_move_direction)
+      if last_move_direction_index == (DIRECTION_SEQUENCE.length - 1)
+        # Return to first direction
+        next_move_direction_index = 0
+      else
+        next_move_direction_index = last_move_direction_index + 1
+      end
+
+      DIRECTION_SEQUENCE[next_move_direction_index]
+    end
     def get_new_coordinates(direction)
-      new_row = self.last_square.row + direction[0]
-      new_col = self.last_square.col + direction[1]
+      new_col = self.last_square.col + direction[0]
+      new_row = self.last_square.row + direction[1]
+
       [new_row, new_col]
     end
 
