@@ -1,6 +1,6 @@
 module SpiralMemory
   class Grid
-    START_POINT = [0,0]
+    START_POINT = [0,0] #[col, row]
     MOVE_RIGHT = [1,0]
     MOVE_UP = [0,1]
     MOVE_LEFT = [-1,0]
@@ -12,11 +12,6 @@ module SpiralMemory
       @squares =  {coordinate_string(START_POINT) => Square.new(1, START_POINT[0], START_POINT[1])} # contains "x-y" :Square
       @last_coordinate_added = coordinate_string(START_POINT)
       @last_move_direction = nil
-    end
-
-    def coordinate_string(points)
-      # Makes a key like "1-3" out of an array [1,3]
-      points.join("-")
     end
 
     def add_squares(greatest_value)
@@ -49,6 +44,11 @@ module SpiralMemory
       self.last_move_direction = move_direction
     end
 
+    def coordinate_string(points)
+      # Makes a key like "col-row" out of an array [col,row]
+      points.join("-")
+    end
+
     def square_taken?(coordinates)
       self.squares[coordinate_string(coordinates)].is_a?(Square)
     end
@@ -68,7 +68,7 @@ module SpiralMemory
       new_col = self.last_square.col + direction[0]
       new_row = self.last_square.row + direction[1]
 
-      [new_row, new_col]
+      [new_col, new_row]
     end
 
     def get_distance(value)
@@ -81,14 +81,37 @@ module SpiralMemory
     def last_square
       self.squares[self.last_coordinate_added]
     end
+
+    def find_adjacent_values(square)
+      adjacent_cols = ((square.col - 1)..(square.col + 1))
+      adjacent_rows = ((square.row - 1)..(square.row + 1))
+      current_position = square.col.to_s + "-" + square.row.to_s
+
+      adjacent_values = []
+      # Check each position around a square for 
+      adjacent_cols.each do |col|
+        adjacent_rows.each do |row|
+          col_row_combo = coordinate_string([col, row])
+          unless col_row_combo == current_position
+            adjacent_square = self.squares[col_row_combo]
+            if adjacent_square
+              adjacent_values << adjacent_square.value
+            end
+          end
+        end
+      end
+      adjacent_values
+    end
   end
 
   class Square
     attr_reader :value, :row, :col
-    def initialize(value, row, col)
+    def initialize(value, col, row)
       @value = value
       @row = row
       @col = col
     end
   end
 end
+
+#puts(SpiralMemory::Grid.new.get_distance(312051))
