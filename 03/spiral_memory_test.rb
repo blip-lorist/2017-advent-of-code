@@ -23,12 +23,9 @@ describe SpiralMemory::Grid do
   #  end
   #end
 
-  #describe "#squareBuilder" do
-  #  it "adds a square to the grid" do
-  #    @grid.add_squares(3)
-  #    assert(@grid.square(3).is_a?(SpiralMemory::Square))
-  #    assert_equal(3, @grid.square(3).col)
-  #    assert_equal(1, @grid.square(3).row)
-  #  end
-  #end
+  describe "#squareBuilder" do
+    it "adds a square to the grid" do
+      @grid.add_squares(2)
+    end
+  end
 end
