@@ -52,8 +52,16 @@ describe SpiralMemory::Grid do
   describe "#square values attribute" do
     it "is set to the sum of adjacent square values" do
       @grid.add_squares(3) # this is placed at 1-1
-      third_square = @grid.squares["1-1"]
+      assert_equal(1, @grid.last_square.col)
+      assert_equal(1, @grid.last_square.row)
+      third_square = @grid.last_square
       assert_equal(2, third_square.value)
+    end
+
+    it "still works on the 10th square..." do
+      @grid.add_squares(10)
+      tenth_square  = @grid.last_square
+      assert_equal(26, tenth_square.value)
     end
   end
 end
