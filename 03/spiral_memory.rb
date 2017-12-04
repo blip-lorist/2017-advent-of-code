@@ -40,6 +40,14 @@ module SpiralMemory
       # Add the new square to our grid
       new_square = Square.new(value, new_coordinates[0], new_coordinates[1])
       adjacent_summed_value = sum_adjacent_values(new_square)
+
+      puts(adjacent_summed_value)
+      # Hard-coded halt
+      if adjacent_summed_value > 312051
+        puts(adjacent_summed_value)
+        exit
+      end
+
       new_square.value = adjacent_summed_value
 
       self.squares[coordinate_string(new_coordinates)] = new_square
@@ -128,4 +136,16 @@ module SpiralMemory
   end
 end
 
+
+# Answer part one
 #puts(SpiralMemory::Grid.new.get_distance(312051))
+
+# Answer part two
+@grid = SpiralMemory::Grid.new
+nth_square = 2
+while true
+  # Just keep adding squares til program exits
+
+  @grid.place_square(nth_square)
+  nth_square += 1
+end
