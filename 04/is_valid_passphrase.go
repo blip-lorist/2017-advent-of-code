@@ -31,11 +31,22 @@ func main() {
 func isValidPassphrase(input string) bool {
   slice := strings.Fields(input)
 
-  // Sort
-  sort.Strings(slice)
+  var sortedLettersSlice[]string
 
-  for i, current := range slice {
-    if i < (len(slice)-1) && current == slice[i+1] {
+  // Sorted letters
+  for _, current := range slice {
+    lettersSlice := strings.Split(current, "")
+    sort.Strings(lettersSlice)
+    sortedLettersString := strings.Join(lettersSlice, "")
+    sortedLettersSlice = append(sortedLettersSlice, sortedLettersString)
+  }
+
+  // Sorted words
+  sort.Strings(sortedLettersSlice)
+
+  for i, current := range sortedLettersSlice {
+    // De-dup: This also finds anagrams next to each other
+    if i < (len(sortedLettersSlice)-1) && current == sortedLettersSlice[i+1] {
       return false
     }
   }
