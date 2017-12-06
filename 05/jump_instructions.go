@@ -49,30 +49,44 @@ func exitStepsCount(input string) int {
   // Node we're leaving
   previous := stepsLinkedList.Front()
   current := stepsLinkedList.Front()
+  stepSum := 0
 
-  fmt.Println("first node value")
-  fmt.Println(previous.Value)
 
-  moveToNewNode(previous, current)
+  // wtf go why is this your while loop
+  for current != nil {
+    current = moveToNewNode(previous, current)
 
-  // Increment previous node
-  previous.Value = previous.Value.(int) + 1
+    if current == nil {
+      fmt.Println("current node is nil")
+      break
+    } else {
+      fmt.Println("current node")
+      fmt.Println(current.Value)
+    }
 
-  fmt.Println("first node after leaving")
-  fmt.Println(previous.Value)
+    // Increment step
+    stepSum += 1
 
-  return 0
+    // Increment previous node
+    previous.Value = previous.Value.(int) + 1
+
+    fmt.Println("updated previous to:")
+    fmt.Println(previous.Value)
+  }
+
+  return stepSum
 }
 
-func moveToNewNode(previous *list.Element, current *list.Element) {
+func moveToNewNode(previous *list.Element, current *list.Element) *list.Element {
  // Follow instructions
   instructions, _ := previous.Value.(int)
 
   for i := 1; i <= instructions; i++ {
     current = current.Next()
+    if current == nil {
+      break
+    }
   }
-
-  fmt.Println("current node value")
-  fmt.Println(current.Value)
+  return current
 }
 
