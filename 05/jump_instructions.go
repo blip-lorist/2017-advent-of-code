@@ -38,8 +38,10 @@ func exitStepsCount(input string) int {
     currentInt, _ := strconv.Atoi(current)
 
     if stepsLinkedList.Len() == 0 {
+      // Add first node
       latestNode = stepsLinkedList.PushBack(currentInt)
     } else {
+      // Add new node and update latestNode
       latestNode = stepsLinkedList.InsertAfter(currentInt, latestNode)
     }
   }
@@ -51,7 +53,19 @@ func exitStepsCount(input string) int {
   fmt.Println("first node value")
   fmt.Println(previous.Value)
 
-  // Follow instructions
+  moveToNewNode(previous, current)
+
+  // Increment previous node
+  previous.Value = previous.Value.(int) + 1
+
+  fmt.Println("first node after leaving")
+  fmt.Println(previous.Value)
+
+  return 0
+}
+
+func moveToNewNode(previous *list.Element, current *list.Element) {
+ // Follow instructions
   instructions, _ := previous.Value.(int)
 
   for i := 1; i <= instructions; i++ {
@@ -60,12 +74,5 @@ func exitStepsCount(input string) int {
 
   fmt.Println("current node value")
   fmt.Println(current.Value)
-  // Increment previous node
-  previous.Value = instructions + 1
-
-  fmt.Println("first node after leaving")
-  fmt.Println(previous.Value)
-
-  return 0
-
 }
+
