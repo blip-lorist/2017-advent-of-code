@@ -11,7 +11,7 @@ import (
 var testInput =  strings.NewReader("0\n3\n0\n1\n-3")
 var testBuf = bufio.NewScanner(testInput)
 var exitStepsCountTests = map[*bufio.Scanner]int{
-  testBuf : 5,
+  testBuf : 10, // test for part 2
 }
 
 func TestExitStepsCount(t *testing.T) {

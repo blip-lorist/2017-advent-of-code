@@ -52,18 +52,17 @@ func exitStepsCount(input *bufio.Scanner) int {
     previous = current
     current = moveToNewNode(previous, current)
 
-    if current == nil {
-      break
-    } 
-
     // Increment step
     stepSum += 1
 
-    // Increment previous node
-    previous.Value = previous.Value.(int) + 1
-  }
+    if current == nil {
+      break
+    }
 
-  stepSum += 1 // record the step for exiting
+    // update previous node
+    currentValue, _ := current.Value.(int)
+    previous.Value = updatedPrevValue(previous, currentValue)
+  }
 
   return stepSum
 }
@@ -93,3 +92,14 @@ func moveToNewNode(previous *list.Element, current *list.Element) *list.Element 
   return current
 }
 
+func updatedPrevValue(previous *list.Element, currentValue int) int {
+  absOffsetValue := math.Abs(float64(currentValue))
+  var newPreviousValue int
+  if int(absOffsetValue) >= 3 {
+    newPreviousValue = previous.Value.(int) - 1
+  } else {
+    newPreviousValue = previous.Value.(int) + 1
+  }
+
+  return newPreviousValue
+}
