@@ -53,21 +53,14 @@ func exitStepsCount(input *bufio.Scanner) int {
     current = moveToNewNode(previous, current)
 
     if current == nil {
-      //fmt.Println("current node is nil")
       break
-    } else {
-      //fmt.Println("current node")
-      //fmt.Println(current.Value)
-    }
+    } 
 
     // Increment step
     stepSum += 1
 
     // Increment previous node
-    //fmt.Printf("previous was %d\n", previous.Value)
     previous.Value = previous.Value.(int) + 1
-
-    //fmt.Printf("previous updated to %d\n", previous.Value)
   }
 
   stepSum += 1 // record the step for exiting
