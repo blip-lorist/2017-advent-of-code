@@ -5,8 +5,8 @@ import (
   "fmt"
   "os"
   "container/list"
-  "strings"
   "strconv"
+  "math"
 )
 
 func main() {
@@ -16,25 +16,20 @@ func main() {
   }
   defer file.Close()
 
-  sum := 0
-  scanner := bufio.NewScanner(file)
-
-  for scanner.Scan() {
-    line := scanner.Text()
-    exitStepsCount(line)
-  }
-  fmt.Println(sum)
+  fileBuf := bufio.NewScanner(file)
+  fmt.Println("Sum is")
+  fmt.Println(exitStepsCount(fileBuf))
 }
 
-func exitStepsCount(input string) int {
-  slice := strings.Fields(input)
+func exitStepsCount(input *bufio.Scanner) int {
 
   stepsLinkedList := list.New()
 
   var latestNode *list.Element
 
   // Build linked list
-  for _, current := range slice {
+  for input.Scan() {
+    current := input.Text()
     currentInt, _ := strconv.Atoi(current)
 
     if stepsLinkedList.Len() == 0 {
@@ -54,37 +49,52 @@ func exitStepsCount(input string) int {
 
   // wtf go why is this your while loop
   for current != nil {
+    previous = current
     current = moveToNewNode(previous, current)
 
     if current == nil {
-      fmt.Println("current node is nil")
+      //fmt.Println("current node is nil")
       break
     } else {
-      fmt.Println("current node")
-      fmt.Println(current.Value)
+      //fmt.Println("current node")
+      //fmt.Println(current.Value)
     }
 
     // Increment step
     stepSum += 1
 
     // Increment previous node
+    //fmt.Printf("previous was %d\n", previous.Value)
     previous.Value = previous.Value.(int) + 1
 
-    fmt.Println("updated previous to:")
-    fmt.Println(previous.Value)
+    //fmt.Printf("previous updated to %d\n", previous.Value)
   }
+
+  stepSum += 1 // record the step for exiting
 
   return stepSum
 }
 
 func moveToNewNode(previous *list.Element, current *list.Element) *list.Element {
  // Follow instructions
+
   instructions, _ := previous.Value.(int)
 
-  for i := 1; i <= instructions; i++ {
-    current = current.Next()
-    if current == nil {
-      break
+  if instructions < 0 {
+    absValueInstructions := math.Abs(float64(instructions))
+
+    for i := 1; i <= int(absValueInstructions); i++ {
+      current = current.Prev()
+      if current == nil {
+        break
+      }
+    }
+  } else {
+    for i := 1; i <= instructions; i++ {
+      current = current.Next()
+      if current == nil {
+        break
+      }
     }
   }
   return current

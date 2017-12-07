@@ -1,11 +1,17 @@
 package main
 
-import "testing"
+import (
+  "testing"
+  "bufio"
+  "strings"
+)
 
 // Here's my test input and expected output
 // This builds a literal hash map in Go
-var exitStepsCountTests = map[string]int{
-  "0\n3\n0\n1\n-3" : 5,
+var testInput =  strings.NewReader("0\n3\n0\n1\n-3")
+var testBuf = bufio.NewScanner(testInput)
+var exitStepsCountTests = map[*bufio.Scanner]int{
+  testBuf : 5,
 }
 
 func TestExitStepsCount(t *testing.T) {
