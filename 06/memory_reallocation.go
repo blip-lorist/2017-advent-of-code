@@ -23,13 +23,29 @@ func reallocationCycles(input string) int {
   // Until basecase is found
   for hasUniqueState {
     cycleCount += 1
-    hasUniqueState = logUniqueState(intSlice, log)
+
     // Log the bank state in a set and perform dup check
-    //logState(currentBanks, log)
+    hasUniqueState = logUniqueState(intSlice, log)
+
     // Find the largest bank
+    //largestBankIndex = findLargestBank(intSlice)
     // Zero it out, then redistribute the blocks
   }
   return cycleCount
+}
+
+func findLargestBank(intSlice []int) int {
+  largestSeenIndex := 0
+  largestSeenValue := intSlice[0]
+
+  for i, num := range intSlice {
+    if num > largestSeenValue {
+      largestSeenValue = num
+      largestSeenIndex = i
+    }
+  }
+
+  return largestSeenIndex
 }
 
 func logUniqueState(currentBanks []int, log map[string]bool) bool {

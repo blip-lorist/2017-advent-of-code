@@ -22,6 +22,15 @@ func TestLogState(t *testing.T) {
 
 }
 
+func TestFindLargestBank(t *testing.T) {
+  state := []int{0,2,7,0}
+  expectedIndex := 2 //  The value at index 2 is the largest in the slice
+  actualIndex := findLargestBank(state)
+  if expectedIndex != actualIndex {
+      t.Errorf("expected %d, got %d", expectedIndex, actualIndex)
+  }
+}
+
 var memoryReallocationTest = map[string]int {
   "0 2 7 0" : 5,
 }
