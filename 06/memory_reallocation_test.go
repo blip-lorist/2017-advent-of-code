@@ -6,7 +6,7 @@ import (
 
 func TestLogState(t *testing.T) {
   stateToLog := []int{0,2,7,0}
-  expectedKey := "0270"
+  expectedKey := "0,2,7,0"
   log := make(map[string]bool)
   logUniqueState(stateToLog, log)
   _, present := log[expectedKey]

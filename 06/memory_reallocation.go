@@ -84,8 +84,19 @@ func logUniqueState(currentBanks []int, log map[string]bool) bool {
   // If logging is successful, return true, if duplicate is found return false
 
   currentBanksString := ""
-  for _,  bank := range currentBanks {
-    currentBanksString += strconv.Itoa(bank)
+  var delimiter string
+  for i,  bank := range currentBanks {
+    // It's important to a delimiter in this key
+    // Otherwise I will get false positives!
+
+    if i == len(currentBanks) - 1 {
+      delimiter = ""
+    } else {
+      delimiter = ","
+    }
+
+    // eg: "4,2,5,1"
+    currentBanksString += (strconv.Itoa(bank) + delimiter)
   }
 
   _, present := log[currentBanksString]
