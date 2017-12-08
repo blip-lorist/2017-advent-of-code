@@ -8,11 +8,18 @@ func TestLogState(t *testing.T) {
   stateToLog := []int{0,2,7,0}
   expectedKey := "0270"
   log := make(map[string]bool)
-  actual := logState(stateToLog, log)
-  _, present := actual[expectedKey]
+  logUniqueState(stateToLog, log)
+  _, present := log[expectedKey]
   if !present {
       t.Errorf("expectedKey %s is not present", expectedKey)
   }
+
+  // Test duplicate detection
+  isUnique := logUniqueState(stateToLog, log)
+  if isUnique {
+    t.Errorf("duplicate key %s was not detected", expectedKey)
+  }
+
 }
 
 //var memoryReallocationTest = map[string]int {
