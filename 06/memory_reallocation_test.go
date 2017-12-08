@@ -31,6 +31,20 @@ func TestFindLargestBank(t *testing.T) {
   }
 }
 
+func TestReallocateBlocks(t *testing.T) {
+  state := []int{0,2,7,0}
+  largestBankIndex := 2 //  The value at index 2 is the largest in the slice
+  expectedNextState := []int{2,4,1,2}
+  reallocateBlocks(largestBankIndex, state)
+
+  for i, actual := range state {
+    expected := expectedNextState[i]
+    if expected != actual {
+      t.Errorf("expected %d, got %d", expected, actual)
+    }
+  }
+}
+
 var memoryReallocationTest = map[string]int {
   "0 2 7 0" : 5,
 }
