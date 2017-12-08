@@ -29,10 +29,28 @@ var findRootTest = map[*bufio.Scanner]string {
 }
 
 func TestFindRoot(t *testing.T) {
-  for input, expected := range findRootTest {
+  for _, expected := range findRootTest {
     actual := findRoot(testBuf)
     if expected != actual {
-      t.Errorf("for input %s, expected %v, got %v", input, expected, actual)
+      t.Errorf("Expected %s, got %s", expected, actual)
     }
   }
 }
+
+func TestLogBranchesRoot(t *testing.T) {
+  log := make(map[string]string)
+  branches := []string{
+    "ktlj",
+    "cntj",
+  }
+
+  program := "fwft"
+
+  logBranchRoot(branches, program, log)
+  actual := log[branches[0]]
+  if actual != program {
+    t.Errorf("Expected %s, got %s", program, actual) 
+  }
+}
+
+
