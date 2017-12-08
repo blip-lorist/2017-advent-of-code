@@ -18,11 +18,11 @@ func main() {
 
   for scanner.Scan() {
     line := scanner.Text()
-    fmt.Println(reallocationCycles(line))
+    fmt.Println(reallocationLoopCycles(line))
   }
 }
 
-func reallocationCycles(input string) int {
+func reallocationLoopCycles(input string) int {
   slice := strings.Fields(input)
   var intSlice []int
   for _,  str := range slice {
@@ -47,7 +47,11 @@ func reallocationCycles(input string) int {
     // Log the bank state in a set and perform dup check
     hasUniqueState = logUniqueState(intSlice, cycleCount, log)
   }
-  return cycleCount
+
+  loopStateKey := getLogKey(intSlice)
+  cycleFirstSeen := log[loopStateKey]
+  loopCycles := cycleCount - cycleFirstSeen
+  return loopCycles
 }
 
 func reallocateBlocks(largestBankIndex int, intSlice []int) {

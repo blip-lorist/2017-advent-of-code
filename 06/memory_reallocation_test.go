@@ -57,12 +57,12 @@ func TestReallocateBlocks(t *testing.T) {
 }
 
 var memoryReallocationTest = map[string]int {
-  "0 2 7 0" : 5,
+  "0 2 7 0" : 4,
 }
 
 func TestMemoryReallocation(t *testing.T) {
   for input, expected := range memoryReallocationTest{
-    actual := reallocationCycles(input)
+    actual := reallocationLoopCycles(input)
     if expected != actual {
       t.Errorf("for input %s, expected %v, got %v", input, expected, actual)
     }
