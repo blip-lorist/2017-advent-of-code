@@ -3,9 +3,23 @@ package main
 import (
   "strings"
   "strconv"
+  "os"
+  "fmt"
+  "bufio"
 )
 
 func main() {
+  file, err := os.Open("input.txt")
+  if err != nil {
+    fmt.Println(err)
+  }
+  defer file.Close()
+  scanner := bufio.NewScanner(file)
+
+  for scanner.Scan() {
+    line := scanner.Text()
+    fmt.Println(reallocationCycles(line))
+  }
 }
 
 func reallocationCycles(input string) int {
