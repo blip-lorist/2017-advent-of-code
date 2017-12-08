@@ -22,15 +22,15 @@ func TestLogState(t *testing.T) {
 
 }
 
-//var memoryReallocationTest = map[string]int {
-//  "0 2 7 0" : 5,
-//}
-//
-//func TestMemoryReallocation(t *testing.T) {
-//  for input, expected := range memoryReallocationTest{
-//    actual := reallocationCycles(input)
-//    if expected != actual {
-//      t.Errorf("for input %s, expected %v, got %v", input, expected, actual)
-//    }
-//  }
-//}
+var memoryReallocationTest = map[string]int {
+  "0 2 7 0" : 5,
+}
+
+func TestMemoryReallocation(t *testing.T) {
+  for input, expected := range memoryReallocationTest{
+    actual := reallocationCycles(input)
+    if expected != actual {
+      t.Errorf("for input %s, expected %v, got %v", input, expected, actual)
+    }
+  }
+}

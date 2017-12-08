@@ -1,7 +1,7 @@
 package main
 
 import (
-  //"strings"
+  "strings"
   "strconv"
 )
 
@@ -9,15 +9,27 @@ func main() {
 }
 
 func reallocationCycles(input string) int {
-  //slice := strings.Fields(input)
-  //log := make(map[string]bool)
+  slice := strings.Fields(input)
+  var intSlice []int
+  for _,  str := range slice {
+    integer, _ := strconv.Atoi(str)
+    intSlice = append(intSlice, integer)
+  }
+
+  log := make(map[string]bool)
+  hasUniqueState := true
+  cycleCount := 0
 
   // Until basecase is found
-  // Log the bank state in a set and perform dup check
-  //logState(currentBanks, log)
-  // Find the largest bank
-  // Zero it out, then redistribute the blocks
-  return 0
+  for hasUniqueState {
+    cycleCount += 1
+    hasUniqueState = logUniqueState(intSlice, log)
+    // Log the bank state in a set and perform dup check
+    //logState(currentBanks, log)
+    // Find the largest bank
+    // Zero it out, then redistribute the blocks
+  }
+  return cycleCount
 }
 
 func logUniqueState(currentBanks []int, log map[string]bool) bool {
