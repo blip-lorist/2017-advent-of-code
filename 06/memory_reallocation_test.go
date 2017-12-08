@@ -7,15 +7,17 @@ import (
 func TestLogState(t *testing.T) {
   stateToLog := []int{0,2,7,0}
   expectedKey := "0,2,7,0"
-  log := make(map[string]bool)
-  logUniqueState(stateToLog, log)
-  _, present := log[expectedKey]
-  if !present {
+  cycleCount := 42
+  expectedValue := cycleCount
+  log := make(map[string]int)
+  logUniqueState(stateToLog, cycleCount, log)
+  actual, present := log[expectedKey]
+  if !present || actual != expectedValue {
       t.Errorf("expectedKey %s is not present", expectedKey)
   }
 
   // Test duplicate detection
-  isUnique := logUniqueState(stateToLog, log)
+  isUnique := logUniqueState(stateToLog, cycleCount, log)
   if isUnique {
     t.Errorf("duplicate key %s was not detected", expectedKey)
   }

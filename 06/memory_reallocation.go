@@ -30,10 +30,10 @@ func reallocationCycles(input string) int {
     intSlice = append(intSlice, integer)
   }
 
-  log := make(map[string]bool)
-  logUniqueState(intSlice, log) // Log the starting state
-  hasUniqueState := true
+  log := make(map[string]int)
   cycleCount := 0
+  logUniqueState(intSlice, cycleCount, log) // Log the starting state
+  hasUniqueState := true
 
   // Until basecase is found
   for hasUniqueState {
@@ -42,10 +42,10 @@ func reallocationCycles(input string) int {
     // Zero it out, then redistribute the blocks
     reallocateBlocks(largestBankIndex, intSlice)
 
-    // Log the bank state in a set and perform dup check
-    hasUniqueState = logUniqueState(intSlice, log)
-
     cycleCount += 1
+
+    // Log the bank state in a set and perform dup check
+    hasUniqueState = logUniqueState(intSlice, cycleCount, log)
   }
   return cycleCount
 }
@@ -94,30 +94,37 @@ func findLargestBank(intSlice []int) int {
   return largestSeenIndex
 }
 
-func logUniqueState(currentBanks []int, log map[string]bool) bool {
+func logUniqueState(currentBanks []int, cycleCount int, log map[string]int) bool {
   // If logging is successful, return true, if duplicate is found return false
 
+  currentBanksString := getLogKey(currentBanks)
+
+  _, present := log[currentBanksString]
+  if !present {
+    log[currentBanksString] = cycleCount
+    return true
+  } else {
+    return false
+  }
+}
+
+// Helper method to generate a log key
+// eg: "4,2,5,1"
+func getLogKey(banksSlice []int) string {
   currentBanksString := ""
   var delimiter string
-  for i,  bank := range currentBanks {
+  for i,  bank := range banksSlice {
     // It's important to a delimiter in this key
     // Otherwise I will get false positives!
 
-    if i == len(currentBanks) - 1 {
+    if i == len(banksSlice) - 1 {
       delimiter = ""
     } else {
       delimiter = ","
     }
 
-    // eg: "4,2,5,1"
     currentBanksString += (strconv.Itoa(bank) + delimiter)
   }
 
-  _, present := log[currentBanksString]
-  if !present {
-    log[currentBanksString] = true
-    return true
-  } else {
-    return false
-  }
+  return currentBanksString
 }
