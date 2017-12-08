@@ -31,6 +31,15 @@ func TestFindLargestBank(t *testing.T) {
   }
 }
 
+func TestFindLargestBankTieBreaker(t *testing.T) {
+  state := []int{3,1,2,3}
+  expectedIndex := 0 // Ensure that tie-breaker works - should return the smallest-index bank
+  actualIndex := findLargestBank(state)
+  if expectedIndex != actualIndex {
+      t.Errorf("expected %d, got %d", expectedIndex, actualIndex)
+  }
+}
+
 func TestReallocateBlocks(t *testing.T) {
   state := []int{0,2,7,0}
   largestBankIndex := 2 //  The value at index 2 is the largest in the slice

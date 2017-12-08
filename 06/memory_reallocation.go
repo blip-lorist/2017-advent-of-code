@@ -67,9 +67,12 @@ func findLargestBank(intSlice []int) int {
   largestSeenIndex := 0
   largestSeenValue := intSlice[0]
 
-  for i, num := range intSlice {
-    if num > largestSeenValue {
-      largestSeenValue = num
+  // Iterate backwards through the slice
+  // Since ties are broken by the lowest index bank
+  // This allows us to break the tie during the first pass, instead of searching and tiebreaking afterwards
+  for i := len(intSlice) - 1; i >= 0; i-- {
+    if intSlice[i] > largestSeenValue {
+      largestSeenValue = intSlice[i]
       largestSeenIndex = i
     }
   }
